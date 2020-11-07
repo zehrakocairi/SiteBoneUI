@@ -1,28 +1,124 @@
+/* eslint-disable no-debugger */
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="">
+      <q-layout
+        view="lHh Lpr lff"
+        container
+        style="height: 820px"
+        class="shadow-2 rounded-borders"
+      >
+        <q-header elevated class="bg-primary">
+          <q-toolbar>
+            <q-toolbar-title>SiteBone</q-toolbar-title>
+            <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
+          </q-toolbar>
+        </q-header>
+
+        <q-drawer v-model="drawer" show-if-above :width="200" :breakpoint="400">
+          <q-scroll-area
+            style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd"
+          >
+            <q-list padding>
+              <q-item clickable v-ripple @click="goToPage('/')">
+                <q-item-section avatar>
+                  <q-icon name="inbox" />
+                </q-item-section>
+
+                <q-item-section>
+                  Home
+                </q-item-section>
+              </q-item>
+
+              <q-item active clickable v-ripple @click="goToPage('/about')">
+                <q-item-section avatar>
+                  <q-icon name="star" />
+                </q-item-section>
+
+                <q-item-section>
+                  About
+                </q-item-section>
+              </q-item>
+
+              <q-item clickable v-ripple @click="goToPage('/contact')">
+                <q-item-section avatar>
+                  <q-icon name="send" />
+                </q-item-section>
+
+                <q-item-section>
+                  Contact
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-ripple @click="goToPage('/login')">
+                <q-item-section avatar>
+                  <q-icon name="inbox" />
+                </q-item-section>
+
+                <q-item-section>
+                  login
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-scroll-area>
+
+          <q-img
+            class="absolute-top"
+            src="https://cdn.quasar.dev/img/material.png"
+            style="height: 150px"
+          >
+            <div class="absolute-bottom bg-transparent">
+              <q-avatar size="56px" class="q-mb-sm">
+                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              </q-avatar>
+              <div class="text-weight-bold">Razvan Stoenescu</div>
+              <div>@rstoenescu</div>
+            </div>
+          </q-img>
+        </q-drawer>
+
+        <q-page-container>
+          <q-page padding>
+            <router-view />
+          </q-page>
+        </q-page-container>
+      </q-layout>
+    </div>
   </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  data() {
+    return {
+      drawer: false,
+    };
+  },
+  methods: {
+    goToPage(url) {
+      this.$router.push(url);
+    },
+  },
+};
 </script>
-
-<style>
+>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+#nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>
