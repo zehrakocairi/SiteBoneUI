@@ -15,9 +15,13 @@
           </q-toolbar>
         </q-header>
 
-        <q-drawer v-model="drawer" show-if-above :width="200" :breakpoint="400">
+        <q-drawer v-model="drawer" show-if-above :width="160" :breakpoint="400">
           <q-scroll-area
-            style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd"
+            style="
+              height: calc(100% - 150px);
+              margin-top: 150px;
+              border-right: 1px solid #ddd;
+            "
           >
             <q-list padding>
               <q-item clickable v-ripple @click="goToPage('/')">
@@ -25,9 +29,7 @@
                   <q-icon name="inbox" />
                 </q-item-section>
 
-                <q-item-section>
-                  Home
-                </q-item-section>
+                <q-item-section> Home </q-item-section>
               </q-item>
 
               <q-item active clickable v-ripple @click="goToPage('/about')">
@@ -35,9 +37,7 @@
                   <q-icon name="star" />
                 </q-item-section>
 
-                <q-item-section>
-                  About
-                </q-item-section>
+                <q-item-section> About </q-item-section>
               </q-item>
 
               <q-item clickable v-ripple @click="goToPage('/contact')">
@@ -45,18 +45,14 @@
                   <q-icon name="send" />
                 </q-item-section>
 
-                <q-item-section>
-                  Contact
-                </q-item-section>
+                <q-item-section> Contact </q-item-section>
               </q-item>
               <q-item clickable v-ripple @click="goToPage('/login')">
                 <q-item-section avatar>
                   <q-icon name="inbox" />
                 </q-item-section>
 
-                <q-item-section>
-                  login
-                </q-item-section>
+                <q-item-section> login </q-item-section>
               </q-item>
             </q-list>
           </q-scroll-area>
@@ -66,12 +62,10 @@
             src="https://cdn.quasar.dev/img/material.png"
             style="height: 150px"
           >
-            <div class="absolute-bottom bg-transparent">
-              <q-avatar size="56px" class="q-mb-sm">
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+            <div class="absolute-center bg-transparent">
+              <q-avatar size="90px" class="q-mb-sm">
+                <img src="./assets/logo.png" />
               </q-avatar>
-              <div class="text-weight-bold">Razvan Stoenescu</div>
-              <div>@rstoenescu</div>
             </div>
           </q-img>
         </q-drawer>

@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md" style="max-width: 400px">
-    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+    <q-form @submit="onSubmit" class="q-gutter-md">
       <q-input
         filled
         v-model="name"
@@ -12,27 +12,21 @@
 
       <q-input
         filled
-        type="number"
-        v-model="age"
-        label="Your age *"
+        type="password"
+        v-model="password"
+        label="Your password *"
         lazy-rules
         :rules="[
-          (val) => (val !== null && val !== '') || 'Please type your age',
-          (val) => (val > 0 && val < 100) || 'Please type a real age',
+          (val) =>
+            (val !== undefined && val.length > 5) ||
+            'Şifre en az 6 karakterli olmalıdır',
         ]"
       />
 
-      <q-toggle v-model="accept" label="I accept the license and terms" />
+      <q-toggle v-model="rememberMe" label="Beni hatırla" />
 
       <div>
-        <q-btn label="Submit" type="submit" color="primary" />
-        <q-btn
-          label="Reset"
-          type="reset"
-          color="primary"
-          flat
-          class="q-ml-sm"
-        />
+        <q-btn label="Login" type="submit" color="primary" />
       </div>
     </q-form>
   </div>
@@ -44,35 +38,47 @@ export default {
   data() {
     return {
       name: null,
-      age: null,
-
-      accept: false,
+      password: null,
+      rememberMe: false,
     };
   },
 
   methods: {
     onSubmit() {
-      if (this.accept !== true) {
-        this.$q.notify({
-          color: "red-5",
-          textColor: "white",
-          icon: "warning",
-          message: "You need to accept the license and terms first",
-        });
-      } else {
+      let isLoginSuccess = this.logIn();
+      if (isLoginSuccess) {
         this.$q.notify({
           color: "green-4",
           textColor: "white",
           icon: "cloud_done",
           message: "Submitted",
         });
+        this.$router.push("/");
+      } else {
+        this.$q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "Giriş yaparken bir hatayla karşılaşıldı",
+        });
+        this.password = "";
       }
     },
 
     onReset() {
       this.name = null;
       this.age = null;
-      this.accept = false;
+      this.rememberMe = false;
+    },
+    logIn() {
+      // eslint-disable-next-line
+      let user = {
+        name: this.name,
+        password: this.password,
+        isRememberMe: this.isRememberMe,
+      };
+      //send user to backend
+      return true;
     },
   },
 };
