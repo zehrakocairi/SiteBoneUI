@@ -52,7 +52,14 @@
                   <q-icon name="inbox" />
                 </q-item-section>
 
-                <q-item-section> login </q-item-section>
+                <q-item-section> Login </q-item-section>
+              </q-item>
+              <q-item clickable v-ripple @click="goToPage('/register')">
+                <q-item-section avatar>
+                  <q-icon name="send" />
+                </q-item-section>
+
+                <q-item-section> Register </q-item-section>
               </q-item>
             </q-list>
           </q-scroll-area>

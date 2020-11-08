@@ -1,6 +1,6 @@
 <template>
   <div>
-    <sb-login></sb-login>
+    <sb-login />
   </div>
 </template>
 
