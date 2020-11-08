@@ -33,6 +33,8 @@
 </template>
 
 <script>
+/* eslint-disable */
+
 export default {
   name: "SbLogin",
   data() {
@@ -45,24 +47,7 @@ export default {
 
   methods: {
     onSubmit() {
-      let isLoginSuccess = this.logIn();
-      if (isLoginSuccess) {
-        this.$q.notify({
-          color: "green-4",
-          textColor: "white",
-          icon: "cloud_done",
-          message: "Submitted",
-        });
-        this.$router.push("/");
-      } else {
-        this.$q.notify({
-          color: "red-5",
-          textColor: "white",
-          icon: "warning",
-          message: "Giriş yaparken bir hatayla karşılaşıldı",
-        });
-        this.password = "";
-      }
+      this.logIn();
     },
 
     onReset() {
@@ -71,14 +56,39 @@ export default {
       this.rememberMe = false;
     },
     logIn() {
-      // eslint-disable-next-line
       let user = {
-        name: this.name,
+        email: this.name,
         password: this.password,
         isRememberMe: this.isRememberMe,
       };
-      //send user to backend
-      return true;
+      user.email = "eve.holt@reqres.in"; // For Test
+      fetch("https://reqres.in/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.error) {
+            this.$q.notify({
+              color: "red-5",
+              textColor: "white",
+              icon: "warning",
+              message: response.error,
+            });
+            this.password = "";
+          } else {
+            this.$q.notify({
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Hosgeldin",
+            });
+            this.$router.push("/");
+          }
+        });
     },
   },
 };
