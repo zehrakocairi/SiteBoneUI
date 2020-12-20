@@ -1,34 +1,52 @@
 <template>
-  <div class="q-pa-md" style="max-width: 400px">
-    <q-form @submit="onSubmit" class="q-gutter-md">
-      <q-input
-        filled
-        v-model="name"
-        label="Your name *"
-        hint="Name and surname"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please type something']"
-      />
-
-      <q-input
-        filled
-        type="password"
-        v-model="password"
-        label="Your password *"
-        lazy-rules
-        :rules="[
-          (val) =>
-            (val !== undefined && val.length > 5) ||
-            'Şifre en az 6 karakterli olmalıdır',
-        ]"
-      />
-
-      <q-toggle v-model="rememberMe" label="Beni hatırla" />
-
-      <div>
-        <q-btn label="Login" type="submit" color="primary" />
-      </div>
-    </q-form>
+  <div class="q-pa-xl row">
+    <div class="col"></div>
+    <div class="col-4">
+      <q-card class="my-card q-px-md q-py-xl shadow-5">
+        <q-card-section>
+          <q-form @submit="onSubmit" class="q-gutter-md">
+            <h5 class="q-ma-sm">Log in</h5>
+            <q-input
+              outlined
+              :dense="true"
+              v-model="userName"
+              label="Your username *"
+              hint="Username"
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || 'Please type something',
+              ]"
+            />
+            <q-input
+              outlined
+              :dense="true"
+              type="password"
+              v-model="password"
+              label="Your password *"
+              lazy-rules
+              :rules="[
+                (val) => {
+                  return (
+                    (val !== undefined && val.length > 5) ||
+                    'Şifre en az 6 karakterli olmalıdır'
+                  );
+                },
+              ]"
+            />
+            <q-toggle
+              class="q-ma-sm"
+              v-model="rememberMe"
+              label="Beni hatırla"
+            />
+            <a href="/register ">Create user</a>
+            <div>
+              <q-btn label="Login" type="submit" color="primary" />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </div>
+    <div class="col"></div>
   </div>
 </template>
 
@@ -39,9 +57,9 @@ export default {
   name: "SbLogin",
   data() {
     return {
-      name: null,
-      password: null,
-      rememberMe: false,
+      userName: "",
+      password: "",
+      rememberMe: true,
     };
   },
 
@@ -51,18 +69,17 @@ export default {
     },
 
     onReset() {
-      this.name = null;
-      this.age = null;
+      this.userName = "";
+      this.password = "";
       this.rememberMe = false;
     },
     logIn() {
       let user = {
-        email: this.name,
+        userName: this.userName,
         password: this.password,
         isRememberMe: this.isRememberMe,
       };
-      user.email = "eve.holt@reqres.in"; // For Test
-      fetch("https://reqres.in/api/login", {
+      fetch("https://localhost:5001/api/Account/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
@@ -71,6 +88,7 @@ export default {
       })
         .then((res) => res.json())
         .then((response) => {
+          debugger;
           if (response.error) {
             this.$q.notify({
               color: "red-5",

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-pa-xl">
     <sb-login />
   </div>
 </template>
